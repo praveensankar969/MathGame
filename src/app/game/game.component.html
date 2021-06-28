@@ -1,0 +1,62 @@
+<div class="ui container raised segment spacer">
+  <div class="ui inverted segment">
+    <h2 class="ui grey header">
+      <div class="content">
+        Math Game
+      </div>
+    </h2>
+  </div>
+  <div class="form">
+    <form (enter) = "Console()" #form="ngForm">
+      <button class="ui blue button" (click)="Start()" [disabled]="started">Start Game</button>
+      <div *ngIf="progressBar>100"> Time limit exceeded! Press enter to proceed to next question 
+        <button class="compact ui button" (click)="CheckResult($event)">Proceed ?</button>
+      </div>
+      <hr>
+      <ng-container >
+        <mat-progress-bar *ngIf="started" mode="determinate" value="{{progressBar}}"></mat-progress-bar>
+        <div class="ui form">
+          <div class="fields">
+            <div class="field">
+              <input type="text" name="input1" [readonly]="true" value="{{inputOne}}">
+            </div>
+            <div class="field small">
+              <input type="text" name="operator" [readonly]="true" [value]="'+'">
+            </div>
+            <div class="field">
+              <input type="text" name="operator" [readonly]="true" value="{{inputTwo}}">
+            </div>
+            <div class="field ui input" [ngClass]="{correct :resultClass}">
+              <input type="text" [readonly]="!started" #res=ngModel name="result" (keyup.enter)="CheckResult($event)"
+                [(ngModel)]="result" value={{result}}>
+            </div>
+          </div>
+        </div>
+      </ng-container>  
+      <button class="ui button" *ngIf="started" (click)="EndGame()">End & View Results</button>
+    </form>
+
+  </div>
+
+  <div *ngIf="stopped" class="ui segment">
+    <span>
+      Total Questions attempted : <strong>{{total}} </strong> 
+    </span>
+    <hr>
+    <span>
+      Number of correct answers : <strong>{{counter}} </strong>
+    </span>
+  </div>
+</div>
+
+
+
+<div class="ui ignored bottom attached warning message">
+  <strong> How to Play </strong>
+  <p>
+    1. Press Start to launch the game. <br/>
+    2. Calculate the sum of numbers and enter you answer in the blank field .<br/>
+    3. Each round has a time limit of 10 seconds, answer entered after 10 seconds even if correct will be marked incorrect.<br/>
+    4. Press End & View Results to view your results. (Result can be view only once game is started)<br/>
+  </p>
+</div>

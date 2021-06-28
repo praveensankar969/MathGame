@@ -1,0 +1,32 @@
+.container{
+    display: absolute;
+    width: 770px;
+    height : auto;
+}
+.ui.input.correct > input {
+    background-color:transparent;
+    border-color: green;
+    color: green;
+    box-shadow: green;
+}
+
+
+input{
+    margin-top: 20px !important;
+    margin-bottom: 20px !important;
+    text-align:center;
+    font-weight: bolder;
+}
+
+.small{
+    width : 50px;
+}
+
+.form{
+    display: flex;
+    justify-content: center;
+}
+
+
+  
+  
