@@ -1,5 +1,8 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { interval } from 'rxjs';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { interval, Observable, BehaviorSubject } from 'rxjs';
+import { LeaderService } from '../leader.service';
+import { Data } from '../Data';
+import { CheckLoginService } from '../check-login-service';
 
 @Component({
   selector: 'app-game',
@@ -19,9 +22,12 @@ export class GameComponent implements OnInit {
   result: string = '';
   resultClass: boolean = true;
   operator: string[] = ['+', '-'];
-  obs: any;
+  timer: any;
+  loginObs :any;
 
-  constructor() { }
+  constructor(private service: LeaderService, public loginService : CheckLoginService) {
+    this.loginObs = this.loginService.obs;
+   }
 
   ngOnInit(): void {
     let randomNumber = this.generateRandomNumber();
@@ -30,7 +36,16 @@ export class GameComponent implements OnInit {
     this.progressBar = 0;
   }
 
+  ngDoCheck() {
+    if (this.progressBar > 110) {
+      this.UpdateView();
+    }
+  }
+
   Start() {
+    this.result = '';
+    this.counter =0;
+    this.total=0;
     this.appstarted.emit(true);
     this.started = true;
     this.stopped = false;
@@ -38,26 +53,27 @@ export class GameComponent implements OnInit {
     this.SetTimer();
   }
 
+
+
   CheckResult(event: Event) {
-    this.total++;
+    console.log();
     if (this.progressBar < 100) {
       this.result = (event.target as HTMLInputElement).value;
       if (parseInt(this.result) == (this.inputOne + this.inputTwo)) {
         this.resultClass = true;
         this.counter++;
-        this.result = '';
+        this.UpdateView();
       }
     }
+  }
 
-    else {
-      this.resultClass = false;
-      this.result = '';
-    }
+  UpdateView() {
+    this.timer.unsubscribe();
+    this.total++;
     this.result = '';
     let randomNumber = this.generateRandomNumber();
     this.inputOne = randomNumber[0];
     this.inputTwo = randomNumber[1];
-    this.obs.unsubscribe();
     this.progressBar = 0;
     this.SetTimer();
   }
@@ -71,24 +87,58 @@ export class GameComponent implements OnInit {
 
   SetTimer() {
     this.progressBar = 0;
-    this.obs = interval(100).subscribe(x => this.progressBar = x);
-    return this.progressBar;
+    this.timer = interval(100).subscribe(x => {
+      this.progressBar = x;
+    });
   }
 
   EndGame() {
     this.started = false;
     this.progressBar = 0;
-    this.obs.unsubscribe();
+    this.timer.unsubscribe();
     this.stopped = true;
     this.appstarted.emit(false);
+    this.UpdateToDB();
   }
 
-  Console(){
-    console.log("Clicked");
-  }
 
   ngOnDestroy(): void {
-    this.obs.unsubscribe();
+    this.timer.unsubscribe();
+  }
+
+  UpdateToDB() {
+    const user = "" + localStorage.getItem("USER");
+    const userData = this.service.getUser(user);
+    if (userData == null) {
+      const newUserData: Data = {
+        name: user,
+        highestScore: this.counter,
+        currentScore: this.counter
+      };
+      this.service.onUpdateData(newUserData);
+    }
+    else {
+      const hScore = userData.highestScore;
+      if (this.counter > hScore) {
+        const newUserData: Data = {
+          name: user,
+          highestScore: this.counter,
+          currentScore: this.counter
+        };
+        this.service.onUpdateData(newUserData);
+      }
+      else {
+        const newUserData: Data = {
+          name: user,
+          highestScore: hScore,
+          currentScore: this.counter
+        };
+        this.service.onUpdateData(newUserData);
+      }
+    }
+
+
+
   }
 
 }

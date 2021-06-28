@@ -1,0 +1,16 @@
+<div class="ui dimmer visible active" (click)="OnClick()">
+    <div (click)="$event.stopPropagation()" class="ui modal visible active">
+        <i class="close icon" (click)="OnClick()"></i>
+        <div class="header">
+            Leaderboard
+        </div>
+        <div class="content">
+           <app-leaderboard> </app-leaderboard>
+        </div>
+        <div class="actions">
+            <button class="ui black deny button" (click)="OnClick()">
+                Ok
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,14 @@
+<table class="ui celled table unstackable">
+    <thead>
+      <tr>
+        <th *ngFor="let head of header">{{head}}</th>
+        </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of leaderboard">
+        <td >{{data.name}}</td>    
+        <td >{{data.highestScore}}</td> 
+      </tr>
+    </tbody>
+</table>
+

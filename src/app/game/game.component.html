@@ -1,9 +1,9 @@
 <div class="ui container raised segment spacer">
   <div class="form">
-    <form (enter) = "Console()" #form="ngForm">
-      <button class="ui blue button" (click)="Start()" [disabled]="started">Start Game</button>
-      <div *ngIf="progressBar>100"> Time limit exceeded! Press enter to proceed to next question 
-        <button class="compact ui button" (click)="CheckResult($event)">Proceed ?</button>
+    <form #form="ngForm">
+      <button class="ui blue button" (click)="Start()" *ngIf="!started">Start Game</button>
+      <button class="ui button" *ngIf="started" (click)="EndGame()">End & View Results</button>
+      <div *ngIf="progressBar>100"> Time limit exceeded! Proceeding to next question...
       </div>
       <hr>
       <ng-container >
@@ -20,18 +20,17 @@
               <input type="text" name="operator" [readonly]="true" value="{{inputTwo}}">
             </div>
             <div class="field ui input" [ngClass]="{correct :resultClass}">
-              <input type="text" [readonly]="!started" #res=ngModel name="result" (keyup.enter)="CheckResult($event)"
+              <input type="text" [readonly]="!started" #res=ngModel name="result" (input)="CheckResult($event)"
                 [(ngModel)]="result" value={{result}}>
             </div>
           </div>
         </div>
       </ng-container>  
-      <button class="ui button" *ngIf="started" (click)="EndGame()">End & View Results</button>
     </form>
 
   </div>
 
-  <div *ngIf="stopped" class="ui segment">
+  <div *ngIf="stopped && (loginObs | async)" class="ui segment">
     <span>
       Total Questions attempted : <strong>{{total}} </strong> 
     </span>
@@ -45,13 +44,21 @@
 
 
 
-
 <div class="ui ignored bottom attached warning message">
   <strong> How to Play </strong>
   <p>
     1. Press Start to launch the game. <br/>
-    2. Calculate the sum of numbers and enter you answer in the blank field .<br/>
-    3. Each round has a time limit of 10 seconds, answer entered after 10 seconds even if correct will be marked incorrect.<br/>
-    4. Press End & View Results to view your results. (Result can be viewed only after the game is started)<br/>
+    2. Calculate the sum of numbers and enter you answer in the blank field. <br/>
+    3. Correct answer will take you to next set of question.
+    4. Wrong answer, you have 10 seconds to enter correct answer.
+    3. Next set of questions will be displayed if no correct answer was entered after 10 seconds<br/>
+    5. Press Enter or "End & View Results" to view your results.<br/>
   </p>
 </div>
+
+<div class="ui success message">
+  <div class="header">
+    Join League to view other players result and to see your rank.
+  </div>
+</div>
+
