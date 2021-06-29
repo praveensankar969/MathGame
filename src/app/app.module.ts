@@ -12,15 +12,13 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CardComponent } from './card/card.component';
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 import { HttpClientModule } from '@angular/common/http';
-import { CounterComponent } from './counter/counter.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     GameComponent,
     CardComponent,
-    LeaderboardComponent,
-    CounterComponent
+    LeaderboardComponent
   ],
   imports: [
     BrowserAnimationsModule,

@@ -1,13 +1,11 @@
 <div class="ui container raised segment spacer">
   <div class="form">
-    <form (enter) = "Donothing()" #form="ngForm">
+    <form #form="ngForm">
       <button type="button" class="ui blue button" (click)="Start()" *ngIf="!started">Start Game</button>
       <button type="button" class="ui button" *ngIf="started" (click)="EndGame()">End & View Results</button>
-      <div *ngIf="progressBar>100"> Time limit exceeded! Proceeding to next question...
-      </div>
       <hr>
       <ng-container >
-        <mat-progress-bar *ngIf="started" mode="determinate" value="{{progressBar}}"></mat-progress-bar>
+        <mat-progress-bar *ngIf="started" mode="determinate" [value]="time"></mat-progress-bar>
         <div class="ui form">
           <div class="fields">
             <div class="field">
@@ -48,11 +46,9 @@
   <strong> How to Play </strong>
   <p>
     1. Press Start to launch the game. <br/>
-    2. Calculate the sum of numbers and enter you answer in the blank field. <br/>
-    3. Correct answer will take you to next set of question.
-    4. Wrong answer, you have 10 seconds to enter correct answer.
-    3. Next set of questions will be displayed if no correct answer was entered after 10 seconds<br/>
-    5. Press Enter or "End & View Results" to view your results.<br/>
+    2. Solve maximum set of questions in<strong> 100 </strong>seconds.<br/>
+    3. Join League to participate in Global Ranking<br/>
+    4. Press Enter or "End & View Results" to view your results.<br/>
   </p>
 </div>
 
