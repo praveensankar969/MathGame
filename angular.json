@@ -72,7 +72,8 @@
               "browserTarget": "MathGame:build:production"
             },
             "development": {
-              "browserTarget": "MathGame:build:development"
+              "browserTarget": "MathGame:build:development",
+              "proxyConfig": "src/proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"

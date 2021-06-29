@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { interval, Observable, BehaviorSubject } from 'rxjs';
 import { LeaderService } from '../leader.service';
-import { Data } from '../Data';
+import { Data } from '../DataService';
 import { CheckLoginService } from '../check-login-service';
 
 @Component({
@@ -20,20 +20,20 @@ export class GameComponent implements OnInit {
   inputOne: number = 0;
   inputTwo: number = 0;
   result: string = '';
+  checkLogin :boolean  = false;
   resultClass: boolean = true;
   operator: string[] = ['+', '-'];
   timer: any;
-  loginObs :any;
 
   constructor(private service: LeaderService, public loginService : CheckLoginService) {
-    this.loginObs = this.loginService.obs;
-   }
+  }
 
   ngOnInit(): void {
     let randomNumber = this.generateRandomNumber();
     this.inputOne = randomNumber[0];
     this.inputTwo = randomNumber[1];
     this.progressBar = 0;
+    this.checkLogin = this.loginService.LoggedIn();
   }
 
   ngDoCheck() {
@@ -50,6 +50,7 @@ export class GameComponent implements OnInit {
     this.started = true;
     this.stopped = false;
     this.progressBar = 0;
+    this.checkLogin = this.loginService.LoggedIn();
     this.SetTimer();
   }
 
@@ -98,7 +99,12 @@ export class GameComponent implements OnInit {
     this.timer.unsubscribe();
     this.stopped = true;
     this.appstarted.emit(false);
-    this.UpdateToDB();
+    this.checkLogin = this.loginService.LoggedIn();
+    console.log("logged in is :  "+ this.checkLogin);
+    if(this.checkLogin){
+     this.UpdateToDB();
+    }
+    
   }
 
 
@@ -108,37 +114,16 @@ export class GameComponent implements OnInit {
 
   UpdateToDB() {
     const user = "" + localStorage.getItem("USER");
-    const userData = this.service.getUser(user);
-    if (userData == null) {
-      const newUserData: Data = {
+      const newUserData: Partial<Data> = {
         name: user,
-        highestScore: this.counter,
         currentScore: this.counter
       };
-      this.service.onUpdateData(newUserData);
-    }
-    else {
-      const hScore = userData.highestScore;
-      if (this.counter > hScore) {
-        const newUserData: Data = {
-          name: user,
-          highestScore: this.counter,
-          currentScore: this.counter
-        };
-        this.service.onUpdateData(newUserData);
-      }
-      else {
-        const newUserData: Data = {
-          name: user,
-          highestScore: hScore,
-          currentScore: this.counter
-        };
-        this.service.onUpdateData(newUserData);
-      }
-    }
+    this.service.onUpdateData(newUserData);
+    
+  }
 
-
-
+  Donothing(){
+    
   }
 
 }

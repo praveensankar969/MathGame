@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LeaderService } from '../leader.service';
-import { Data } from '../Data';
+import { Data } from '../DataService';
+import { HttpserviceService } from '../httpservice.service';
 
 @Component({
   selector: 'app-leaderboard',
@@ -16,8 +17,7 @@ export class LeaderboardComponent implements OnInit {
    }
   
   ngOnInit(): void {
-    this.leaderboard = this.service.getHighestScoreSorted();
-    this.leaderboard.sort((user1, user2)=> user1.highestScore > user2.highestScore ? 1 : user1.highestScore<user2.highestScore ? -1 :0 );
+    this.leaderboard = this.service.leaderBoard;
   }
 
 

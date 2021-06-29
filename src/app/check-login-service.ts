@@ -5,15 +5,23 @@ import { BehaviorSubject, observable, Observable } from 'rxjs';
   })
 export class CheckLoginService{
 
-    private subject = new BehaviorSubject<boolean>(false);
-    obs = this.subject as Observable<boolean>;
+   loggedIn : boolean = false;
 
-    Login(){
-        this.subject.next(true);
-    }
+   LoggedIn(){
+       if(this.loggedIn){
+           return true;
+       }
+       else{
+           return false;
+       }
+   }
 
-    Logout(){
-        this.subject.next(false);
-    }
+   Login(){
+       this.loggedIn = true;
+   }
+
+   Logout(){
+       this.loggedIn = false;
+   }
 
 }

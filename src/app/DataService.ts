@@ -1,5 +1,6 @@
 export class Data{
+  id! : number;
   name! : string;
   currentScore! : number;
-  highestScore! : number;
+  highScore! : number;
 }

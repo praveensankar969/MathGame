@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CheckLoginService } from './check-login-service';
 import { LeaderService } from './leader.service';
+import { HttpserviceService } from './httpservice.service';
 
 @Component({
   selector: 'app-root',
@@ -17,14 +18,16 @@ export class AppComponent {
   loggedin :boolean = false;
   joinedLeague : boolean = false;
 
-  constructor(private service : CheckLoginService){
+  constructor(private service : CheckLoginService, private httpservice : LeaderService){
+    console.log("Game started");
+    
     if(localStorage.getItem("USER")!= null){
       this.username = "" + localStorage.getItem("USER");
       this.participate = true;
       this.participatebtn = false;
-      this.loggedin = true;
-      this.joinedLeague = true;
       this.service.Login();
+      this.loggedin =  this.service.LoggedIn();
+      this.joinedLeague = true;
     }
     else{
       this.username = '';
@@ -41,16 +44,19 @@ export class AppComponent {
     this.username = username;
     this.participate =true;
     this.participatebtn = false;
-    this.loggedin = true;
+    this.service.Login();
+    this.loggedin = this.service.LoggedIn();
+    
   }
   SignOut(){
-    this.loggedin = false;
+    this.service.Logout();
+    this.loggedin = this.service.LoggedIn();
     this.participate = false;
     this.participatebtn = true;
     this.joinedLeague =false;
     this.username = '';
     localStorage.removeItem('USER');
-    this.service.Logout();
+    
   }
   AddUser(){
     this.participate =false;

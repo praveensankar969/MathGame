@@ -1,8 +1,8 @@
 <div class="ui container raised segment spacer">
   <div class="form">
-    <form #form="ngForm">
-      <button class="ui blue button" (click)="Start()" *ngIf="!started">Start Game</button>
-      <button class="ui button" *ngIf="started" (click)="EndGame()">End & View Results</button>
+    <form (enter) = "Donothing()" #form="ngForm">
+      <button type="button" class="ui blue button" (click)="Start()" *ngIf="!started">Start Game</button>
+      <button type="button" class="ui button" *ngIf="started" (click)="EndGame()">End & View Results</button>
       <div *ngIf="progressBar>100"> Time limit exceeded! Proceeding to next question...
       </div>
       <hr>
@@ -30,7 +30,7 @@
 
   </div>
 
-  <div *ngIf="stopped && (loginObs | async)" class="ui segment">
+  <div *ngIf="stopped" class="ui segment">
     <span>
       Total Questions attempted : <strong>{{total}} </strong> 
     </span>
