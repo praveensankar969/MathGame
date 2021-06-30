@@ -60,6 +60,7 @@ export class AppComponent {
   }
   AddUser(){
     this.participate =false;
+    this.username = this.username.split(' ').join('');
     localStorage.setItem('USER', this.username);
     this.joinedLeague =true;
     console.log(localStorage.getItem('USER'));
