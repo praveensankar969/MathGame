@@ -17,7 +17,7 @@ export class LeaderboardComponent implements OnInit {
    }
   
   ngOnInit(): void {
-    this.leaderboard = this.service.leaderBoard;
+    this.leaderboard = this.service.leaderBoard.filter(x=> x.highScore>12).sort((a,b)=> b.highScore-a.highScore);
   }
 
 

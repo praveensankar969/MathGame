@@ -28,6 +28,8 @@
 
   </div>
 
+  <div class  = "warning" *ngIf="time<1">Time limit exceeded, Procced to End & View Results...</div>
+
   <div *ngIf="stopped" class="ui segment">
     <span>
       Total Questions attempted : <strong>{{total}} </strong> 
@@ -48,7 +50,7 @@
     1. Press Start to launch the game. <br/>
     2. Solve maximum set of questions in<strong> 100 </strong>seconds.<br/>
     3. Join League to participate in Global Ranking<br/>
-    4. Press Enter or "End & View Results" to view your results.<br/>
+    4. Press "End & View Results" to view your results.<br/>
   </p>
 </div>
 
