@@ -13,3 +13,29 @@
 .card-league{
     margin-top:30px;
 }
+.space{
+    margin-left :10px;
+}
+.rocket{
+    width: 115px;
+    height: 36px;
+    animation: pulse 4s infinite alternate-reverse;
+  }
+  
+@keyframes pulse {
+    0% {
+      background-color: #E0E1E2;
+    }
+    50%{
+        color : #afb0b1;
+    }
+    100% {
+      background-color: #002135;
+      color : white;
+    }
+}
+
+
+
+
+  

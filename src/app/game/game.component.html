@@ -17,7 +17,7 @@
             <div class="field">
               <input type="text" name="operator" [readonly]="true" value="{{inputTwo}}">
             </div>
-            <div class="field ui input" [ngClass]="{correct :resultClass}">
+            <div class="field ui input" [ngClass]="{correct : resultClass}">
               <input type="text" [readonly]="!started" #res=ngModel name="result" (input)="CheckResult($event)"
                 [(ngModel)]="result" value={{result}}>
             </div>
@@ -28,7 +28,7 @@
 
   </div>
 
-  <div class  = "warning" *ngIf="time<1">Time limit exceeded, Procced to End & View Results...</div>
+  <div class  = "warning robot" *ngIf="time<1">Time limit exceeded, Procced to End & View Results...</div>
 
   <div *ngIf="stopped" class="ui segment">
     <span>

@@ -35,5 +35,24 @@ input{
     color:  red;
 }
 
+.robot{
+    animation: endpulse 3s infinite alternate-reverse;
+  }
+  
+@keyframes endpulse {
+    0% {
+        color: rgb(194, 4, 4);
+    }
+    50%{
+        
+        color :rgb(211, 138, 4);
+    }
+    100% {
+        
+        color: rgb(255, 105, 5);
+      
+    }
+}
+
   
   
