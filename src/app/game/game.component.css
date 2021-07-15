@@ -28,11 +28,20 @@ input{
 }
 
 .spacer{
+    
+    border-bottom: 50px;
+}
+.segment{
     background-color:ghostwhite;
+
 }
 
 .warning{
     color:  red;
+}
+
+.ignored{
+    margin-top: 150px !important;
 }
 
 .robot{
@@ -53,6 +62,7 @@ input{
       
     }
 }
-
-  
-  
+ .textfield{
+    color: transparent !important;
+    text-shadow: 0 0 5px rgba(0,0,0,0.5);
+ }

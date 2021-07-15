@@ -1,21 +1,21 @@
-<div class="ui container raised segment spacer">
+<div class="ui container raised spacer segment">
   <div class="form">
     <form #form="ngForm">
-      <button type="button" class="ui blue button" (click)="Start()" *ngIf="!started">Start Game</button>
+      <button type="button" class="ui blue button" (click)="Start()" *ngIf="!started">Start</button>
       <button type="button" class="ui button" *ngIf="started" (click)="EndGame()">End & View Results</button>
-      <hr>
-      <ng-container >
+      <hr hidden>
+      <ng-container>
         <mat-progress-bar *ngIf="started" mode="determinate" [value]="time"></mat-progress-bar>
         <div class="ui form">
           <div class="fields">
             <div class="field">
-              <input type="text" name="input1" [readonly]="true" value="{{inputOne}}">
+              <input type="text" name="input1" [readonly]="true" value="{{inputOne}}" [ngClass]="{textfield: !started}">
             </div>
             <div class="field small">
               <input type="text" name="operator" [readonly]="true" [value]="'+'">
             </div>
-            <div class="field">
-              <input type="text" name="operator" [readonly]="true" value="{{inputTwo}}">
+            <div class="field" >
+              <input type="text" name="operator" [readonly]="true" value="{{inputTwo}}" [ngClass]="{textfield: !started}">
             </div>
             <div class="field ui input" [ngClass]="{correct : resultClass}">
               <input type="text" [readonly]="!started" #res=ngModel name="result" (input)="CheckResult($event)"
@@ -23,34 +23,34 @@
             </div>
           </div>
         </div>
-      </ng-container>  
+      </ng-container>
     </form>
 
   </div>
 
-  <div class  = "warning robot" *ngIf="time<1">Time limit exceeded, Procced to End & View Results...</div>
-
-  <div *ngIf="stopped" class="ui segment">
-    <span>
-      Total Questions attempted : <strong>{{total}} </strong> 
-    </span>
-    <hr>
-    <span>
-      Number of correct answers : <strong>{{counter}} </strong>
-    </span>
-  </div>
+  <div class="warning robot" *ngIf="time<1">Time limit exceeded, Procced to End & View Results...</div>
 </div>
-  
+
+<div *ngIf="stopped" class="ui segment raised">
+  <span>
+    Total Questions attempted : <strong>{{total}} </strong>
+  </span>
+  <hr>
+  <span>
+    Number of correct answers : <strong>{{counter}} </strong>
+  </span>
+</div>
+
 
 
 
 <div class="ui ignored bottom attached warning message">
   <strong> How to Play </strong>
   <p>
-    1. Press Start to launch the game. <br/>
-    2. Solve maximum set of questions in<strong> 100 </strong>seconds.<br/>
-    3. Join League to participate in Global Ranking<br/>
-    4. Press "End & View Results" to view your results.<br/>
+    1. Press Start to launch the game. <br />
+    2. Solve maximum set of questions in<strong> 100 </strong>seconds.<br />
+    3. Join League to participate in Global Ranking<br />
+    4. Press "End & View Results" to view your results.<br />
   </p>
 </div>
 
